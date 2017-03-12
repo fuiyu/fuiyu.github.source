@@ -112,6 +112,15 @@ A:使用flex布局，代码如下:
   flex-basis: 30%;//总和大于100%
 }
 ```
+Q:解决DIV的margin重叠问题。
+
+A: 
+   * 外层元素padding代替
+   * 内层元素透明边框 border:1px solid transparent;
+   * 内层元素绝对定位 postion:absolute:
+   * 外层元素 overflow:hidden;
+   * 内层元素 加float:left;或display:inline-block;
+   * 内层元素padding:1px;
 
 
 
@@ -205,8 +214,109 @@ f();//5
 
 4.利用上例的闭包结构原理延续变量寿命
 
+#### 三、javascript实现继承（阮一峰）
+1.构造函数绑定
+设定有一个person对象，利用apply或call将父对象绑定在子对象上：
+```javascript
+function Person(){
+      this.say = function(){
+            alert("Hello, I'm "+ this.name);
+      }
+}
 
+//继承Person
+function Chris(name){
+      Person.apply(this,arguments)
+      this.name = name;
+}
 
+var chris1 = new Chris('chris');
+chris1.say()
+````
+
+2.prototype模式
+将子类的prototype属性指向父类的实例，就可以实现继承。
+```javascript
+function Person(name){
+      
+      this.say = function(){
+            alert("Hello, I'm "+ this.name);
+      }
+}
+
+//用prototype继承Person
+function Chris(name){
+      this.name = name;
+}
+Chris.prototype = new Person();
+
+//将Chris 的constructor指向Chris
+Chris.prototype.constructor = Chris;
+
+var chris1 = new Chris('chris1');
+chris1.say()
+
+````
+3.继承prototype
+将子类的prototype属性指向父类的prototype，改变资料construcor时会改变父类的construcor。
+```javascript
+function Person(){}
+Person.prototype.say = function(){
+      alert(this.name)
+}
+function Chris(name){
+      this.name = name;
+}
+
+Chris.prototype = Person.prototype;
+
+//注意：同时会把Person的constructor改掉！
+Chris.prototype.constructor = Chris;
+
+var chris1 = new Chris('chris1');
+chris1.say()
+```
+
+4.空对象作为中介进行继承
+由于"直接继承prototype"存在上述的缺点，所以就有第四种方法，利用一个空对象作为中介。
+```javascript
+var F = function(){};
+F.prototype = Person.prototype;
+Chris.prototype = new F();
+Chris.prototype.constructor = Chris;
+
+//对上述方法进行封装
+//其中赋予了子对象uber属性，通过此对父对象的构造进行了记录
+function extend(Child, Parent) {
+      var F = function(){};
+      F.prototype = Parent.prototype;
+      Child.prototype = new F();
+      Child.prototype.constructor = Child;
+      Child.uber = Parent.prototype;
+}
+```
+5.属性拷贝继承
+对父对象的所有属性和方法进行遍历，拷进子对象中
+```javascript
+function extend(Child, Parent) {
+      var p = Parent.prototype;
+      var c = Child.prototype;
+
+      for(var i in p ){
+            c[i] = p [i];
+      }
+
+      c.uber = p;
+}
+```
+上面2到5都属于prototype实现的继承。
+
+>tips：关于function A(){}中全部实现
+1、x = new Object();//创造一个对象
+2、x.constructor = A;//将x的构造函数指向A的函数实体
+3、A.prototype = x;//A的原型指向新开辟的对象
+
+<br>
 
 html 方面
 -------------

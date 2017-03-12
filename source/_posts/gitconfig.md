@@ -24,7 +24,7 @@ $ git config [<file-option>] --get-color name [default]
 $ git config [<file-option>] --get-colorbool name [stdout-is-tty]
 $ git config [<file-option>] -e | --edit
 ```
-你可以通过命令进行`query`（查询）/`set`（设置）/`replace`（替代）/`unset` （取消），`name`一般是指section“.”后面的key变量，如`git congfig user.name fuiyu`
+你可以通过命令进行`query`（查询）/`set`（设置）/`replace`（替代）/`unset` （取消），`name`一般是指section“.”后面的key变量，如`git config user.name fuiyu`
 
 结果
 ```c
@@ -60,7 +60,7 @@ window系统位置：
 查看当前生效的配置，命令：git config -l
 
 #### 三、配置用户信息
-开始所提到的git congfig user.name fuiyu，还可以设置email，address。
+开始所提到的git config user.name fuiyu，还可以设置email，address。
 
 四、 用git config命令编辑配置文件
 命令参数为--edit | -e

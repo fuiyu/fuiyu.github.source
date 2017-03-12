@@ -11,7 +11,7 @@ tags:
   * repository：仓库区（或本地仓库）
   * remote：远程仓库
 
-  #### 一、新建代码库
+#### 一、新建代码库
 
   ```shell
   # 在当前目录新建一个Git代码库
@@ -22,7 +22,7 @@ tags:
   $ git clone [url]
   ```
 
-  #### 二、配置
+#### 二、配置
   git的配置文件为 `.gitconfig`，具体用法见 [http://fuiyu.top/2017/03/06/gitconfig/](http://fuiyu.top/2017/03/06/gitconfig/)
 ```shell
 # 显示当前的Git配置
